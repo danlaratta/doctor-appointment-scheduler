@@ -1,6 +1,6 @@
-from sqlalchemy import Integer, DateTime, Enum, ForeignKey
+from sqlalchemy import Integer, Date, Time, Enum, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from datetime import datetime
+from datetime import date, time
 from typing import TYPE_CHECKING
 from app.models.base import Base 
 from app.enums.appointment_status import AppointmentStatus
@@ -15,7 +15,8 @@ class Appointment(Base):
 
     # Columns 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    appointment_date_time: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    appointment_date: Mapped[date] = mapped_column(Date, nullable=False)
+    appointment_time: Mapped[time] = mapped_column(Time, nullable=False)
     status: Mapped[AppointmentStatus] = mapped_column(
         Enum(
             AppointmentStatus,

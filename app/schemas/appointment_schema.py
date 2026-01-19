@@ -1,11 +1,12 @@
 from pydantic import BaseModel, Field, field_validator
-from datetime import datetime
+from datetime import date, time
 from app.enums.appointment_status import AppointmentStatus
 from app.enums.appointment_duration import AppointmentDuration
 
 
 class AppointmentBase(BaseModel):
-    appointment_date_time: datetime
+    appointment_date: date
+    appointment_time: time
     status: AppointmentStatus = Field(default=AppointmentStatus.SCHEDULED)
     duration: AppointmentDuration 
 
