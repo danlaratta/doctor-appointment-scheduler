@@ -4,6 +4,7 @@ from datetime import datetime
 from typing import TYPE_CHECKING
 from app.models.base import Base 
 from app.enums.appointment_status import AppointmentStatus
+from app.enums.appointment_duration import AppointmentDuration
 
 if TYPE_CHECKING:
     from app.models.doctor import Doctor
@@ -15,16 +16,25 @@ class Appointment(Base):
     # Columns 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     appointment_date_time: Mapped[datetime] = mapped_column(DateTime, nullable=False)
-    appointment_status: Mapped[AppointmentStatus] = mapped_column(
+    status: Mapped[AppointmentStatus] = mapped_column(
         Enum(
             AppointmentStatus,
             name='appointmentstatus',
             native_enum=True,
             values_callable=lambda enum_cls: [e.value for e in enum_cls]
         ),
+        default=AppointmentStatus.SCHEDULED,
         nullable=False
     )
-    duration: Mapped[int] = mapped_column(Integer, nullable=False)
+    duration: Mapped[AppointmentDuration] = mapped_column(
+        Enum(
+            AppointmentDuration,
+             name='appointmentduration',
+            native_enum=True,
+            values_callable=lambda enum_cls: [e.value for e in enum_cls]
+        ), 
+        nullable=False
+    )
 
     # Foreign Keys
     patient_id: Mapped[int] = mapped_column(Integer, ForeignKey('patients.id'), nullable=False)
