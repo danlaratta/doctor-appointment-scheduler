@@ -27,9 +27,9 @@ class DoctorCrud:
         doctor: Doctor | None = result.scalar_one_or_none()
 
         if doctor is None:
-            raise DatabaseException(f'No doctor found doctor_id with id: {doctor_id}')
+            raise DatabaseException(f'No doctor found with id: {doctor_id}')
         return doctor
-
+    
 
     # Check if doctor exists
     async def check_doctor_exists(self, doctor_email: str) -> bool:

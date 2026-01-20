@@ -21,13 +21,13 @@ class PatientCrud:
         return patient
 
 
-    # Get Patient
+    # Get Patient 
     async def get_patient(self, patient_id: int) -> Patient:
         result = await self.db_session.execute(select(Patient).where(Patient.id == patient_id))
         patient: Patient | None = result.scalar_one_or_none()
 
         if patient is None:
-            raise DatabaseException(f'No patient found patient_id with id: {patient_id}')
+            raise DatabaseException(f'No patient found with id: {patient_id}')
         return patient
     
 
