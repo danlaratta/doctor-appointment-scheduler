@@ -63,7 +63,7 @@ class AppointmentService:
         return await self.appointment_crud.update_appointment(appointment)
     
 
-     # Cancel appointment
+    # Cancel appointment
     async def cancel_appointment(self, appt_id: int, appt_date: date, doctor_id: int, patient_id: int) -> Appointment:
         # Get appointment 
         appointment: Appointment = await self.appointment_crud.get_doctor_appointment(appt_id, appt_date, doctor_id, patient_id)
