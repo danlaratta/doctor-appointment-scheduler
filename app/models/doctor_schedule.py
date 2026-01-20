@@ -14,8 +14,8 @@ class DoctorSchedule(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     weekday_start_time: Mapped[time] = mapped_column(Time, nullable=False)   # Allow null for weekday/weekend for doctor's off days
     weekday_end_time: Mapped[time] = mapped_column(Time, nullable=False)
-    weekend_start_time: Mapped[time] = mapped_column(Time, nullable=True)
-    weekend_end_time: Mapped[time] = mapped_column(Time, nullable=True)    
+    weekend_start_time: Mapped[time | None] = mapped_column(Time, nullable=True)
+    weekend_end_time: Mapped[time | None] = mapped_column(Time, nullable=True)    
 
     # Foreign Key
     doctor_id: Mapped[int] = mapped_column(Integer, ForeignKey('doctors.id', ondelete='cascade'), unique=True, nullable=False)

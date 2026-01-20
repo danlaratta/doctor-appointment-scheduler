@@ -4,4 +4,4 @@ class AppointmentStatus(Enum):
     SCHEDULED = 'Scheduled'
     RESCHEDULED = 'Rescheduled'
     COMPLETED = 'Completed'
-    CANCELLED = 'Cancelled'
+    CANCELED = 'Canceled'

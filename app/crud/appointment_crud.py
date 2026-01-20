@@ -1,3 +1,4 @@
+from typing import Any
 from datetime import date, time
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -13,10 +14,10 @@ class AppointmentCrud:
     # Create Appointment
     async def create_appointment(self, appointment: Appointment) -> Appointment:
         self.db_session.add(appointment)
-        await self.db_session.refresh(appointment)
 
         try:
             await self.db_session.commit()
+            await self.db_session.refresh(appointment)
         except IntegrityError as e:
             await self.db_session.rollback()
             raise DatabaseException(f'Failed to create new appointment: violation of model constraints: {e}') from e
@@ -24,7 +25,7 @@ class AppointmentCrud:
 
 
     # Get Doctor's Appointment - single appt by date and patient
-    async def get_doctor_appointment(self, appt_date: date, appt_id: int, doctor_id: int, patient_id: int) -> Appointment:
+    async def get_doctor_appointment(self, appt_id: int, appt_date: date, doctor_id: int, patient_id: int) -> Appointment:
         result = await self.db_session.execute(select(Appointment)
             .where(Appointment.id == appt_id)
             .where(Appointment.appointment_date == appt_date)
@@ -66,11 +67,14 @@ class AppointmentCrud:
 
 
     # Update Appointment
-    async def update_appointment(self) -> None:
-        pass
+    async def update_appointment(self, appointment: Appointment) -> Appointment:
+        try:
+            await self.db_session.commit()
+            await self.db_session.refresh(appointment)
+        except IntegrityError as e:
+            await self.db_session.rollback()
+            raise DatabaseException(
+                f'Failed to update appointment: {e}'
+            ) from e
 
-
-    # Cancel/Delete Appointment
-    async def cancel_appointment(self) -> None:
-        pass
-
+        return appointment

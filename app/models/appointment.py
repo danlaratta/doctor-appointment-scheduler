@@ -15,8 +15,8 @@ class Appointment(Base):
 
     # Columns 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    appointment_date: Mapped[date] = mapped_column(Date, nullable=False)
-    appointment_time: Mapped[time] = mapped_column(Time, nullable=False)
+    appointment_date: Mapped[date | None] = mapped_column(Date, nullable=True)
+    appointment_time: Mapped[time | None] = mapped_column(Time, nullable=True)
     status: Mapped[AppointmentStatus] = mapped_column(
         Enum(
             AppointmentStatus,

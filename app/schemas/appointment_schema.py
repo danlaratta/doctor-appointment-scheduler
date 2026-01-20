@@ -5,23 +5,11 @@ from app.enums.appointment_duration import AppointmentDuration
 
 
 class AppointmentBase(BaseModel):
-    appointment_date: date
-    appointment_time: time
+    appointment_date: date | None
+    appointment_time: time | None
     status: AppointmentStatus = Field(default=AppointmentStatus.SCHEDULED)
     duration: AppointmentDuration 
 
-    @field_validator('appointment_date_time')
-    def validate_appointment_date_time(cls, value):
-        if not value:
-            raise ValueError('Value for appointment date time is required but is missing')
-        return value
-    
-    @field_validator('status')
-    def validate_status(cls, value):
-        if not value:
-            raise ValueError('Value for appointment status is required but is missing')
-        return value
-    
     @field_validator('duration')
     def validate_appointment_duration(cls, value):
         if not value:
