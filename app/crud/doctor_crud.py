@@ -41,11 +41,6 @@ class DoctorCrud:
         return True 
 
 
-    # Update Doctor
-    async def update_doctor(self) -> None:
-        pass
-
-
     # Delete Doctor
     async def delete_doctor(self, doctor_id: int) -> None:
         doctor: Doctor = await self.get_doctor(doctor_id)
