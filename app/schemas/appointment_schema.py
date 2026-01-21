@@ -27,7 +27,9 @@ class AppointmentUpdate(AppointmentBase):
 
 
 class AppointmentResponse(AppointmentBase):
-	id: int 
+    id: int 
+    patient_id: int
+    doctor_id: int
 
-	class Config:
-		from_attributes = True
+    class Config:
+        from_attributes = True

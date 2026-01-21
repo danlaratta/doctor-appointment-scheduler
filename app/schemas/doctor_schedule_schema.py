@@ -6,7 +6,7 @@ class DoctorScheduleBase(BaseModel):
     weekday_start_time: time 
     weekday_end_time: time 
     weekend_start_time: time | None 
-    weekend_start_time: time | None 
+    weekend_end_time: time | None 
 
     @field_validator('weekday_start_time')
     def validate_weekday_start_time(cls, value):
@@ -22,7 +22,7 @@ class DoctorScheduleBase(BaseModel):
     
 
 class DoctorScheduleCreate(DoctorScheduleBase):
-    pass
+    doctor_id: int
 
 
 class DoctorScheduleUpdate(DoctorScheduleBase):
