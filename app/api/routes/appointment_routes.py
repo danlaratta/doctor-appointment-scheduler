@@ -62,16 +62,16 @@ async def get_all_apppointments_route(appt_date: date, doctor_id: int, service: 
 
 # Reschedule Route
 @router.put('/reschedule/{appt_id}', response_model=AppointmentResponse, status_code=status.HTTP_200_OK)
-async def reschedule_apppointment_route(appt_id: int, doctor_id: int, patient_id: int, appt_update: AppointmentReschedule, service: AppointmentService = Depends(get_appointment_service)) -> AppointmentResponse:
+async def reschedule_apppointment_route(appt_id: int, doctor_id: int, patient_id: int, appt_reschedule: AppointmentReschedule, service: AppointmentService = Depends(get_appointment_service)) -> AppointmentResponse:
     try:
         appointment: Appointment = await service.reschedule_appointment(
             appt_id = appt_id,
-            appt_date = appt_update.appointment_date,
-            appt_time = appt_update.appointment_time,
-            duration = appt_update.duration,
+            appt_date = appt_reschedule.appointment_date,
+            appt_time = appt_reschedule.appointment_time,
+            duration = appt_reschedule.duration,
             doctor_id = doctor_id,
             patient_id = patient_id,
-            status = appt_update.status,
+            status = appt_reschedule.status,
 
         )
         return AppointmentResponse.model_validate(appointment)
@@ -81,11 +81,11 @@ async def reschedule_apppointment_route(appt_id: int, doctor_id: int, patient_id
 
 # Cancel Route
 @router.put('/cancel/{appt_id}', response_model=AppointmentResponse, status_code=status.HTTP_200_OK)
-async def cancel_apppointment_route(appt_id: int, doctor_id: int, patient_id: int, appt_update: AppointmentReschedule, service: AppointmentService = Depends(get_appointment_service)) -> AppointmentResponse:
+async def cancel_apppointment_route(appt_id: int, appt_date: date, doctor_id: int, patient_id: int, appt_cancel: AppointmentCancel, service: AppointmentService = Depends(get_appointment_service)) -> AppointmentResponse:
     try:
         appointment: Appointment = await service.cancel_appointment(
             appt_id = appt_id,
-            appt_date = appt_update.appointment_date,
+            appt_date = appt_date,
             doctor_id = doctor_id,
             patient_id = patient_id,
         )
