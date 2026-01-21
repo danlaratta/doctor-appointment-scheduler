@@ -9,8 +9,8 @@ from app.schemas.doctor_schedule_schema import DoctorScheduleCreate, DoctorSched
 from app.services.doctor_schedule_service import DoctorScheduleService
 
 
-# Create doctor router
-router = APIRouter(prefix='/doctor', tags=['Doctors'])
+# Create doctor schedule router
+router = APIRouter(prefix='/doctor-schedule', tags=[''])
 
 
 # Dependency builder that wires Route → Service → Crud → DB Session
@@ -37,7 +37,7 @@ async def create_doctor_schedule_route(schedule_create: DoctorScheduleCreate, se
 
 
 # Get Route
-@router.get('/{schedule_id}', response_model=DoctorScheduleResponse, status_code=status.HTTP_200_OK)
+@router.get('/get/{schedule_id}', response_model=DoctorScheduleResponse, status_code=status.HTTP_200_OK)
 async def get_doctor_schedule_route(schedule_id: int, doctor_id: int, service: DoctorScheduleService = Depends(get_doctor_schedule_service)) -> DoctorScheduleResponse:
     try:
         schedule: DoctorSchedule = await service.schedule_crud.get_schedule(schedule_id, doctor_id)
@@ -47,7 +47,7 @@ async def get_doctor_schedule_route(schedule_id: int, doctor_id: int, service: D
 
 
 # Update Route
-@router.put('/', response_model=DoctorScheduleResponse, status_code=status.HTTP_200_OK)
+@router.put('/update', response_model=DoctorScheduleResponse, status_code=status.HTTP_200_OK)
 async def update_doctor_schedule_route(schedule_id: int, doctor_id: int, schedule_update: DoctorScheduleUpdate, service: DoctorScheduleService = Depends(get_doctor_schedule_service)) -> DoctorScheduleResponse:
         try:
             schedule: DoctorSchedule = await service.update_doctor_schedule(
@@ -64,7 +64,7 @@ async def update_doctor_schedule_route(schedule_id: int, doctor_id: int, schedul
 
 
 # Delete Route
-@router.delete('/{schedule_id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/delete/{schedule_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_doctor_schedule_route(schedule_id: int, doctor_id: int, service: DoctorScheduleService = Depends(get_doctor_schedule_service)) -> None:
     try:
         await service.schedule_crud.delete_schedule(schedule_id, doctor_id)

@@ -5,8 +5,8 @@ from app.enums.appointment_duration import AppointmentDuration
 
 
 class AppointmentBase(BaseModel):
-    appointment_date: date | None
-    appointment_time: time | None
+    appointment_date: date
+    appointment_time: time
     status: AppointmentStatus = Field(default=AppointmentStatus.SCHEDULED)
     duration: AppointmentDuration 
 
@@ -22,8 +22,12 @@ class AppointmentCreate(AppointmentBase):
     doctor_id: int
 
 
-class AppointmentUpdate(AppointmentBase):
+class AppointmentReschedule(AppointmentBase):
     pass
+
+
+class AppointmentCancel(BaseModel):
+    status: AppointmentStatus
 
 
 class AppointmentResponse(AppointmentBase):

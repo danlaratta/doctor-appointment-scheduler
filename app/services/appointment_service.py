@@ -73,9 +73,6 @@ class AppointmentService:
             raise ValueError('Appointment is already canceled')
         
         # Cancel appointment
-        appointment.appointment_date = None
-        appointment.appointment_time = None
-        appointment.duration = AppointmentDuration.ZERO_MINUTES
         appointment.status = AppointmentStatus.CANCELED
 
         return await self.appointment_crud.update_appointment(appointment)
