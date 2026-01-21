@@ -20,6 +20,6 @@ class Patient(Base):
 
 
     # Relationships
-    appointments: Mapped[list['Appointment']] = relationship(back_populates='patieent', cascade='all delete-orphan', lazy='selectin')
+    appointments: Mapped[list['Appointment']] = relationship(back_populates='patieent', cascade='all, delete-orphan', lazy='selectin')
     
 

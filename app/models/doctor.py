@@ -17,5 +17,5 @@ class Doctor(Base):
     email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
 
     # Relationships
-    appointments: Mapped[list['Appointment']] = relationship(back_populates='doctor', cascade='all delete-orphan', lazy='selectin')
+    appointments: Mapped[list['Appointment']] = relationship(back_populates='doctor', cascade='all, delete-orphan', lazy='selectin')
     doctor_schedule: Mapped['DoctorSchedule'] = relationship(back_populates='doctor', uselist=False, cascade='all, delete-orphan')
